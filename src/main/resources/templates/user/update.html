@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common01::header01}"></div>
+<div style="margin-top:10px; margin-bottom:10px;">
+    <h1 class="color-gray" style="text-align:center;">研修生 編集</h1>
+</div>
+<hr/>
+<form method="post" action="/user/update_confirm">
+    <div style="display:flex">
+        <div class="left-space"></div>
+        <div class="content-area">
+            <div class="form-group row" style="margin-bottom:40px;">
+                <label for="userId" class="col-sm-1 col-form-label">ID</label>
+                <div class="col-sm-1">
+                    <input class="form-control-plaintext" readonly th:value="${user.id}" type="text" name="userId" id="userId" style="width:250px;"/>
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:40px;">
+                <label for="userName">名前</label>
+                <input class="form-control" th:value="${user.name}" type="text" name="userName" id="userName"
+                       aria-describedby="userNameHelp" style="width:250px;"/>
+                <small id="userNameHelp" class="form-text text-muted">※姓名を正確に記載してください。</small>
+            </div>
+            <div class="form-group">
+                <label for="mailAddress">メールアドレス</label>
+                <input class="form-control" th:value="${user.mailAddress}" type="email" name="mailAddress" id="mailAddress"
+                       aria-describedby="mailAddressHelp" style="width:400px;"/>
+                <small id="mailAddressHelp" class="form-text text-muted">※実在するメールアドレスを記載してください。</small>
+            </div>
+        </div>
+        <div class="right-space"></div>
+    </div>
+    <div style="text-align: center; margin-top:50px; margin-bottom:50px;">
+        <input class="btn btn-dark btn-lg" type="submit" value="確認" style="margin-left:30px; margin-right:30px; width:130px;"/>
+        <a class="btn btn-dark btn-lg" href="/user" style="margin-left:30px; margin-right:30px; width:130px;">キャンセル</a>
+    </div>
+
+</form>
+
+<div th:replace="~{common/common01::footer01}"></div>
+</html>

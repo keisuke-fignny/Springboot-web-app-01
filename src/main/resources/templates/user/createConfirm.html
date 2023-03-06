@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common01::header01}"></div>
+<div style="margin-top:10px; margin-bottom:10px;">
+    <h1 class="color-gray" style="text-align:center;">研修生新規登録 確認</h1>
+</div>
+<hr/>
+
+<p class="h3 color-gray" style="text-align: center;">
+    下記の情報で新規登録をします。よろしいですか？
+</p>
+
+<form method="post" action="/user/create_complete" style="margin-top:50px;">
+    <div style="display:flex">
+        <div class="left-space"></div>
+        <div class="content-area">
+            <div class="form-group row">
+                <label for="userName" class="col-sm-4 col-form-label">名前</label>
+                <div class="col-sm-8">
+                    <input class="form-control-plaintext" th:value="${userName}" readonly type="text" name="userName" id="userName"
+                       style="width:250px;"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="mailAddress" class="col-sm-4 col-form-label">メールアドレス</label>
+                <div class="col-sm-8">
+                    <input class="form-control-plaintext" th:value="${mailAddress}" readonly type="email" name="mailAddress" id="mailAddress"
+                           style="width:400px;"/>
+                </div>
+            </div>
+        </div>
+        <div class="right-space"></div>
+    </div>
+    <div style="text-align: center; margin-top:50px; margin-bottom:50px;">
+        <input class="btn btn-primary btn-lg" type="submit" value="登録" style="margin-left:30px; margin-right:30px; width:130px;"/>
+        <a class="btn btn-dark btn-lg" href="/user" style="margin-left:30px; margin-right:30px; width:130px;">キャンセル</a>
+    </div>
+
+</form>
+
+<div th:replace="~{common/common01::footer01}"></div>
+</html>

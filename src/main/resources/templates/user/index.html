@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common01::header01}"></div>
+<div style="margin-top:10px; margin-bottom:10px;">
+    <h1 class="color-gray" style="text-align:center;">研修生一覧</h1>
+</div>
+<hr/>
+
+<div style="display:flex;">
+    <div style="width:80%;"></div>
+    <div style="width:20%; text-align: center">
+        <a href="/user/create"><img th:src="@{/images/create.svg}" style="width:48px; height:48px;"/></a>
+    </div>
+</div>
+<!-- 研修生一覧表示-->
+<div style="display:flex;">
+    <div style="width:10%;"></div>
+    <table class="table" style="margin-top:25px; width:80%;">
+        <thead class="color-gray">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">名前</th>
+            <th scope="col">メールアドレス</th>
+            <th scope="col">編集</th>
+            <th scope="col">削除</th>
+        </tr>
+        </thead>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.mailAddress}"></td>
+            <td><a th:href="@{/user/update/{id}(id=${user.id})}"><img th:src="@{/images/edit.svg}" style="width:24px; height:24px;"/></a></td>
+            <td><a th:href="@{/user/delete/{id}(id=${user.id})}"><img th:src="@{/images/trash.svg}" style="width:24px; height:24px;"/></a></td>
+        </tr>
+    </table>
+    <div style="width:10%;"></div>
+</div>
+
+<div th:replace="~{common/common01::footer01}"></div>
+</html>
