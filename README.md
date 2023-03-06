@@ -9,3 +9,6 @@ SpringBoot
 
 # DB
 MySQL8.x
+
+# Build tool
+Maven3以降
