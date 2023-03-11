@@ -11,8 +11,21 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> findAll();
 
+    // ユーザー１人取得
     @Select("select * from user where id = #{id}")
     User findOneById(@Param("id") int id);
+
+    // userテーブル行数取得
+    @Select("select count(id) from user")
+    long numOfRows();
+
+    /**
+     * 指定ページのユーザーリスト取得
+     * @param numPerPage ページ番号
+     * @param offset 1ページあたりユーザー数
+     */
+    @Select("select * from user limit #{numPerPage} offset #{offset}")
+    List<User> findUsersByPageNo(@Param("numPerPage") long numPerPage, @Param("offset") long offset);
 
     @Insert("insert into user(name, mail_address) values( #{name}, #{mailAddress} )")
     int insertOne(@Param("name") String name, @Param("mailAddress") String mailAddress);

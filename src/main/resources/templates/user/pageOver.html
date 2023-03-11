@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common01::header01}"></div>
+<div style="margin-top:10px; margin-bottom:10px;">
+    <h1 class="color-gray" style="text-align:center;">研修生一覧 ページオーバーエラー</h1>
+</div>
+<hr/>
+
+<div style="text-align:center;">
+    <h1>ページが存在しません。正しいページを選択してください。</h1>
+</div>
+<div style="text-align:center;">
+    <a th:href="@{/user/1}">研修生一覧に戻る</a>
+</div>
+
+<div th:replace="~{common/common01::footer01}"></div>
+</html>
