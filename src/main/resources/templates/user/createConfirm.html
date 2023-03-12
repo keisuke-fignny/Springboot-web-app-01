@@ -10,22 +10,20 @@
     下記の情報で新規登録をします。よろしいですか？
 </p>
 
-<form method="post" action="/user/create_complete" style="margin-top:50px;">
+<form method="post" action="/user/create_complete" th:object="${user}" style="margin-top:50px;">
     <div style="display:flex">
         <div class="left-space"></div>
         <div class="content-area">
             <div class="form-group row">
                 <label for="userName" class="col-sm-4 col-form-label">名前</label>
                 <div class="col-sm-8">
-                    <input class="form-control-plaintext" th:value="${userName}" readonly type="text" name="userName" id="userName"
-                       style="width:250px;"/>
+                    <input class="form-control-plaintext" th:field="*{name}" readonly type="text" style="width:250px;"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="mailAddress" class="col-sm-4 col-form-label">メールアドレス</label>
                 <div class="col-sm-8">
-                    <input class="form-control-plaintext" th:value="${mailAddress}" readonly type="email" name="mailAddress" id="mailAddress"
-                           style="width:400px;"/>
+                    <input class="form-control-plaintext" th:field="*{mailAddress}" readonly type="email" style="width:400px;"/>
                 </div>
             </div>
         </div>

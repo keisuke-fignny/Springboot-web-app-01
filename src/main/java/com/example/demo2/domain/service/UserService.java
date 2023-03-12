@@ -38,9 +38,16 @@ public class UserService {
         return mapper.findUsersByPageNo(numPerPage, offset);
     }
 
+    // パラメータを１つづつ渡して生成
     public int createUser(String name, String mailAddress){
         return mapper.insertOne(name, mailAddress);
     }
+
+    // userオブジェクトを渡して生成.オーバーロード
+    public int createUser(User user){
+        return this.createUser(user.getName(), user.getMailAddress());
+    }
+
 
     public int updateUser(int userId, String userName, String mailAddress){
         return mapper.updateOne(userId, userName, mailAddress);

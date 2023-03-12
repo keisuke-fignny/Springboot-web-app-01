@@ -1,13 +1,13 @@
 package com.example.demo2.controller;
 
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/user")
+@Validated
 public class UserController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -67,24 +68,25 @@ public class UserController {
      * 新規登録
      ****************/
     @GetMapping("/create")
-    public String createInput(){
+    public String createInput(@ModelAttribute User user){
         return "user/create";
     }
 
     @PostMapping("/create_confirm")
-    public String createConfirm(@RequestParam("userName") String userName, @RequestParam("mailAddress") String mailAddress, Model model){
+    public String createConfirm(@ModelAttribute @Validated User user, BindingResult bindingResult, Model model){
 
-        model.addAttribute("userName", userName);
-        model.addAttribute("mailAddress", mailAddress);
+        if(bindingResult.hasErrors()){
+            return "user/create";
+        }
 
         return "user/createConfirm";
     }
 
     @PostMapping("/create_complete")
-    public String createComplete(@RequestParam("userName") String userName, @RequestParam("mailAddress") String mailAddress){
+    public String createComplete(@ModelAttribute User user){
 
-        int count = userService.createUser(userName, mailAddress);
-        System.out.println("ユーザー登録件数" + count + "件");
+        int count = userService.createUser(user);
+
         return "redirect:/user";
     }
 

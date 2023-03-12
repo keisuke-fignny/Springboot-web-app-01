@@ -5,21 +5,35 @@
     <h1 class="color-gray" style="text-align:center;">研修生新規登録</h1>
 </div>
 <hr/>
-<form method="post" action="/user/create_confirm">
+<form method="post" action="/user/create_confirm" th:object="${user}" >
     <div style="display:flex">
         <div class="left-space"></div>
         <div class="content-area">
             <div class="form-group" style="margin-bottom:40px;">
-                <label for="userName">名前</label>
-                <input class="form-control" placeholder="山田　花子" type="text" name="userName" id="userName"
-                       aria-describedby="userNameHelp" style="width:250px;"/>
-                <small id="userNameHelp" class="form-text text-muted">※姓名を正確に記載してください。</small>
+                <label for="name">名前</label>
+                <th:block th:unless="${#fields.hasErrors('name')}">
+                    <input class="form-control" th:field="*{name}" placeholder="山田　花子" type="text"
+                           aria-describedby="userNameHelp" style="width:250px;"/>
+                    <small id="userNameHelp" class="form-text text-muted">※姓名を正確に記載してください。</small>
+                </th:block>
+                <th:block th:if="${#fields.hasErrors('name')}">
+                    <input class="form-control is-invalid" th:field="*{name}" placeholder="山田　花子" type="text"
+                           aria-describedby="userNameHelp" style="width:250px;"/>
+                    <div class="invalid-feedback" th:errors="*{name}"></div>
+                </th:block>
             </div>
             <div class="form-group">
                 <label for="mailAddress">メールアドレス</label>
-                <input class="form-control" placeholder="tarou@example.com" type="email" name="mailAddress" id="mailAddress"
-                       aria-describedby="mailAddressHelp" style="width:400px;"/>
-                <small id="mailAddressHelp" class="form-text text-muted">※実在するメールアドレスを記載してください。</small>
+                <th:block th:unless="${#fields.hasErrors('mailAddress')}">
+                    <input class="form-control" th:field="*{mailAddress}" placeholder="tarou@example.com" type="email"
+                           aria-describedby="mailAddressHelp" style="width:400px;"/>
+                    <small id="mailAddressHelp" class="form-text text-muted">※実在するメールアドレスを記載してください。</small>
+                </th:block>
+                <th:block th:if="${#fields.hasErrors('mailAddress')}">
+                    <input class="form-control is-invalid" th:field="*{mailAddress}" placeholder="tarou@example.com" type="email"
+                           aria-describedby="mailAddressHelp" style="width:400px;"/>
+                    <div class="invalid-feedback" th:errors="*{mailAddress}"></div>
+                </th:block>
             </div>
         </div>
         <div class="right-space"></div>
