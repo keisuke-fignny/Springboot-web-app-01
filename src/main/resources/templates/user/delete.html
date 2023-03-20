@@ -28,6 +28,13 @@
                            style="width:400px;"/>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="pictPath" class="col-sm-4 col-form-label">メールアドレス</label>
+                <div class="col-sm-8">
+                    <img th:src="@{${user.pictPath}}" style="width:32px; height:32px;" id="pictPath" />
+                    <input type="hidden" name="removePictPath" th:value="${user.pictPath}" />
+                </div>
+            </div>
             <div>
                 <input th:value="${user.id}" name="userId" type="hidden" />
             </div>

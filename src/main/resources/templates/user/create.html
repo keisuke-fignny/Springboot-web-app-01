@@ -5,7 +5,7 @@
     <h1 class="color-gray" style="text-align:center;">研修生新規登録</h1>
 </div>
 <hr/>
-<form method="post" action="/user/create_confirm" th:object="${user}" >
+<form method="post" action="/user/create_confirm" th:object="${user}" enctype="multipart/form-data" >
     <div style="display:flex">
         <div class="left-space"></div>
         <div class="content-area">
@@ -34,6 +34,10 @@
                            aria-describedby="mailAddressHelp" style="width:400px;"/>
                     <div class="invalid-feedback" th:errors="*{mailAddress}"></div>
                 </th:block>
+            </div>
+            <div class="mb-3">
+                <label for="pictForm" class="form-label">プロフィール画像を指定してください</label>
+                <input class="form-control" name="pictForm" id="pictForm" type="file" />
             </div>
         </div>
         <div class="right-space"></div>

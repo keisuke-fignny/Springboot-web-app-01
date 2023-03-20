@@ -30,6 +30,9 @@ public interface UserMapper {
     @Insert("insert into user(name, mail_address) values( #{name}, #{mailAddress} )")
     int insertOne(@Param("name") String name, @Param("mailAddress") String mailAddress);
 
+    @Insert("insert into user(name, mail_address, pict_path) values( #{name}, #{mailAddress}, #{pictPath} )")
+    int insertOneWithPict(@Param("name") String name, @Param("mailAddress") String mailAddress, @Param("pictPath") String pictPath);
+
     @Update("update user set name = #{userName}, mail_address = #{mailAddress} where id = #{userId}")
     int updateOne(@Param("userId") int id, @Param("userName") String userName, @Param("mailAddress") String mailAddress);
 

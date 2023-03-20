@@ -21,6 +21,7 @@
             <th scope="col">ID</th>
             <th scope="col">名前</th>
             <th scope="col">メールアドレス</th>
+            <th scope="col">プロフィール画像</th>
             <th scope="col">編集</th>
             <th scope="col">削除</th>
         </tr>
@@ -29,6 +30,7 @@
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.mailAddress}"></td>
+            <td><img th:src="@{${user.pictPath}}" style="width:32px; height:32px;"/></td>
             <td><a th:href="@{/user/update/{id}(id=${user.id})}"><img th:src="@{/images/edit.svg}" style="width:24px; height:24px;"/></a></td>
             <td><a th:href="@{/user/delete/{id}(id=${user.id})}"><img th:src="@{/images/trash.svg}" style="width:24px; height:24px;"/></a></td>
         </tr>

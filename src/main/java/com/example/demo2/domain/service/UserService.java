@@ -1,5 +1,6 @@
 package com.example.demo2.domain.service;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class UserService {
     // userオブジェクトを渡して生成.オーバーロード
     public int createUser(User user){
         return this.createUser(user.getName(), user.getMailAddress());
+    }
+
+    // userオブジェクトを渡して画像パスも渡して生成.オーバーロード
+    public int createUser(User user, String filePath){
+        return mapper.insertOneWithPict(user.getName(), user.getMailAddress(), filePath);
     }
 
 

@@ -3,6 +3,7 @@ package com.example.demo2.controller;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import com.example.demo2.domain.service.UserService;
 import com.example.demo2.domain.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -27,6 +33,9 @@ public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     @Value("${demo2.page_display_range}")
     private int pageDisplayRange;
+
+    @Value("${demo2.pict_default_file}")
+    private String defaultPictName;
 
     @Autowired
     private UserService userService;
@@ -73,19 +82,33 @@ public class UserController {
     }
 
     @PostMapping("/create_confirm")
-    public String createConfirm(@ModelAttribute @Validated User user, BindingResult bindingResult, Model model){
+    public String createConfirm(@ModelAttribute @Validated User user, @RequestParam("pictForm") MultipartFile file,
+                                BindingResult bindingResult, Model model) throws Exception{
+
+        Path p = Paths.get("src/main/resources/static/user_pict_tmp/" + file.getOriginalFilename());
+        file.transferTo(p);
 
         if(bindingResult.hasErrors()){
             return "user/create";
         }
 
+        model.addAttribute("registerPictPath", "/user_pict_tmp/" + file.getOriginalFilename());
+        model.addAttribute("pictFileName", file.getOriginalFilename());
+
         return "user/createConfirm";
     }
 
     @PostMapping("/create_complete")
-    public String createComplete(@ModelAttribute User user){
+    public String createComplete(@ModelAttribute User user,
+                                 @RequestParam("registerPictPath") String registerPictPath, @RequestParam("pictFileName") String pictFileName) throws IOException {
 
-        int count = userService.createUser(user);
+        String offset = Long.toString(System.currentTimeMillis());
+        String storedFileName = "_" + offset + pictFileName;
+
+        Path newPath =  Paths.get("src/main/resources/static/user_pict", storedFileName);
+        Files.move(Paths.get("src/main/resources/static", registerPictPath), newPath);
+
+        int count = userService.createUser(user, "/user_pict/" + storedFileName);
 
         return "redirect:/user";
     }
@@ -134,9 +157,15 @@ public class UserController {
     }
 
     @PostMapping("/delete_complete")
-    public String deleteComplete(@RequestParam("userId") int id){
+    public String deleteComplete(@RequestParam("userId") int id, @RequestParam("removePictPath") String removePictPath) throws IOException{
 
         userService.deleteUser(id);
+
+        // デフォルト画像でなければ、削除
+        if(!removePictPath.equals(defaultPictName)) {
+            Files.delete(Paths.get("src/main/resources/static", removePictPath));
+        }
+
         return "redirect:/user";
     }
 
